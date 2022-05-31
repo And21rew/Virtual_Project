@@ -6,10 +6,11 @@ public class Server {
 
     public static void main(String[] args) {
 
-        try (ServerSocket server = new ServerSocket(8000)) {
+        try (ServerSocket server = new ServerSocket(8000))
+        {
             System.out.println("Server started!");
 
-            while (true) {
+            while (true)
                 try (
                         Socket socket = server.accept();
                         BufferedWriter writer =
@@ -23,12 +24,13 @@ public class Server {
                 ) {
                     String request = reader.readLine();
                     System.out.println("Request: " + request);
-                    String response = "HELLO FROM SERVER" + request.length();
+                    String response = (int) (Math.random() * 30 - 10) + "";
                     System.out.println(response);
                     writer.write(response);
                     writer.newLine();
                     writer.flush();
-                }
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
             }
 
         } catch (IOException e) {
